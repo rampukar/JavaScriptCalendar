@@ -1,0 +1,114 @@
+<!-- 
+Programmer:: Ram Pukar
+Company:: Miracle Interface Pvt.Ltd.
+Address:: Jwagal,Lalitpur,Nepal
+http://www.miracleinterface.com
+https://github.com/rampukar
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS Calendar</title>
+    <style>
+        *{
+            font-family: arial;
+        }
+        #calendar_div{
+            width: 1240px;
+            height: auto;
+            margin: 0 auto;
+            background-color: #fcd;
+        }
+        table {
+            border-collapse: collapse;
+            width:300px;
+            float: left;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+        table, td, th {    
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 5px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        th{
+            background-color: black;
+            color:white;
+        }
+        p{
+            font-size: 13px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .clear{
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div id="calendar_div"></div>
+<script type="text/javascript">
+var initCalendar = function(){
+        var div         = document.getElementById('calendar_div'),tr_td='',main_table='',table,index,
+            arr_month   = ['January','February','March','April','May','June','July','August','September','October','November','December'],
+            yr          = new Date().getFullYear(),arr;
+            for (var i = 0; i <12; i++) {
+                arr=calendarDate(yr,i);
+                index = 0;
+                table='<table><tr><th colspan="7">'+arr_month[i]+' '+yr+'</th></tr><tr><th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th></tr>';
+                
+                for (var j = 0; j <5; j++) {
+                    tr_td+='<tr>';
+                    for (var k = 0; k <7; k++) {
+                        tr_td+='<td>'+arr[index++]+'</td>';
+                    }
+                    tr_td+='</tr>';
+                }
+            table+=tr_td+'</table>';
+            main_table+=table;
+            tr_td='';
+            table='';
+        }
+        div.innerHTML='<p>Programmer:: Ram Pukar<br/>Company:: Miracle Interface Pvt.Ltd.<br/>Address:: Jwagal,Lalitpur,Nepal<br/>http://www.miracleinterface.com<br/>https://github.com/rampukar</p>'+main_table+'<div class="clear"></div>';
+    } //close initCalendar()
+
+    function calendarDate(yr,i){
+        var months      = (i==0) ? 1 : (i+1),
+            days        = (i==0) ? 0 : i,
+            get_date    = new Date(yr,months,0).getDate(),//total number of month days
+            get_day     = new Date(yr,days,1).getDay(),//month start day ...sun,mon.....
+            arrDay      = [], 
+            extra_arr   = [30,31], 
+            extra_day   = get_date-29, 
+            num_day     = 0,temp_day;
+
+        for (var i = 0; i<35; i++) {
+            if((get_day>5 || get_day>6) && (get_date>29) && i<extra_day)  {
+                temp_day=extra_arr[i];
+            } else if(i<get_day ) {
+                temp_day='';
+            } else {
+                if(num_day<get_date){
+                    num_day++
+                    temp_day=num_day;
+                } else {
+                    temp_day='&nbsp;';
+                }
+            }
+            arrDay.push(temp_day);
+        }
+        return arrDay;
+    } // close calendarDate
+
+    //load initCalendar 
+    window.onload =function() {
+        initCalendar();
+    };
+</script>
+</body>
+</html>
